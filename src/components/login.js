@@ -79,7 +79,7 @@ const Login = () => {
             Login
           </button>
         </div>
-        {setotpsend(true) ? (
+        {/* {setotpsend(true) ? (
           <>
             <label>Enter OTP send on your number</label>
             <input
@@ -92,7 +92,7 @@ const Login = () => {
           </>
         ) : (
           setotpsend(false)
-        )}
+        )} */}
         <h3>
           NewUser??---
           <Link to="/signup" style={{ textDecoration: "none" }}>
