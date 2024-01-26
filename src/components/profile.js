@@ -1,6 +1,19 @@
+// import React from "react";
+// const Profile = () => {
+//   return (
+//     <>
+//       <div class="profilemain">
+//         <h1 style={{ color: "white" }}> Hello gyzz this is my profile</h1>
+//         <h3>Name: Sania Bansotra</h3>
+//         <h3>Email: saniabansotra@gmail.com</h3>
+//         <h3>Phone Number: 889956478</h3>
+//       </div>
+//     </>
+//   );
+// }
 import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-const Login = () => {
+const Profile = () => {
   const navigate = useNavigate();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
@@ -79,8 +92,8 @@ const Login = () => {
             Login
           </button>
         </div>
-        {setotpsend(true) ? (
-          <>
+        {/* {setotpsend(true) ? (
+          <div>
             <label>Enter OTP send on your number</label>
             <input
               type="number"
@@ -89,10 +102,10 @@ const Login = () => {
                 setotpsend(e.target.value);
               }}
             />
-          </>
+          </div>
         ) : (
           setotpsend(false)
-        )}
+        )} */}
         <h3>
           NewUser??---
           <Link to="/signup" style={{ textDecoration: "none" }}>
@@ -104,4 +117,5 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+
+export default Profile;
