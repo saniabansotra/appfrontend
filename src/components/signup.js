@@ -1,13 +1,47 @@
 import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [name, setname] = useState("");
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [phonenumber, setphonenumber] = useState("");
-  const [name, setname] = useState("");
-  const [age, setage] = useState("");
+  // const [age, setage] = useState("");
+  const handleregister = async () => {
+    try {
+      if (
+        name.trim() === "" ||
+        password.trim() === "" ||
+        email.trim() === "" ||
+        phonenumber.trim() === true
+      ) {
+        return toast.warning("please enter the full details");
+      }
+      const response = await axios.post("./signup", {
+        email: email,
+        username: name,
+        userpassword: password,
+        phonenumber: phonenumber,
+      });
+      if (response.data.success) {
+        toast.success("successfully registered");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.error
+      ) {
+        toast.error(error.response.data.error);
+      }
+    }
+  };
 
   return (
     <>
@@ -25,14 +59,7 @@ const Signup = () => {
         <h1 style={{ color: "rgb(184, 183, 183)" }}>SIGNUP</h1>
         {/* <label for="name">Name:</label> */}
         <input
-          style={{
-            border: "none",
-            color: "white",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "black",
-            boxShadow: "1px 1px 10px #fa7d868c",
-          }}
+          class="input"
           type="name"
           value={name}
           onChange={(e) => {
@@ -43,14 +70,7 @@ const Signup = () => {
         <br />
 
         <input
-          style={{
-            border: "none",
-            color: "white",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "black",
-            boxShadow: "1px 1px 10px #fa7d868c",
-          }}
+          class="input"
           value={email}
           type="email"
           onChange={(e) => {
@@ -59,16 +79,9 @@ const Signup = () => {
           placeholder="Email"
         />
         <br />
-        {/* <label for="phonenumber">Phone Number:</label> */}
+
         <input
-          style={{
-            border: "none",
-            color: "white",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "black",
-            boxShadow: "1px 1px 10px #fa7d868c",
-          }}
+          class="input"
           value={phonenumber}
           type="number"
           onChange={(e) => {
@@ -79,14 +92,7 @@ const Signup = () => {
         <br />
         {/* <label for="passowrd">Passowrd:</label> */}
         <input
-          style={{
-            border: "none",
-            color: "white",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "black",
-            boxShadow: "1px 1px 10px #fa7d868c",
-          }}
+          class="input"
           type="password"
           value={password}
           onChange={(e) => {
@@ -118,10 +124,10 @@ const Signup = () => {
               cursor: "pointer",
             }}
             onClick={() => {
-              navigate("/profile");
+              handleregister();
             }}
           >
-            Signup
+            Register
           </button>
         </div>
         <h3 style={{ display: "flex", flexDirection: "row" }}>

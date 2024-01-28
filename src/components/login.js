@@ -1,10 +1,26 @@
 import { React, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 const Login = () => {
   const navigate = useNavigate();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [otpsent, setotpsend] = useState(false);
+  const [otp, setotp] = useState(null);
+  const handleotpverify = async () => {
+    try {
+      const response = await axios.post("/mfa", {
+        email: email,
+        userpassword: password,
+        code: otpsent,
+      });
+      if (response.data.success) {
+        toast.success("Welcome to famebook");
+        navigate("/profile");
+      }
+    } catch (error) {}
+  };
   return (
     <>
       <h1
@@ -20,14 +36,7 @@ const Login = () => {
       <div class="login">
         <h1>Login</h1>
         <input
-          style={{
-            border: "none",
-            color: "white",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "black",
-            boxShadow: "1px 1px 10px #fa7d868c",
-          }}
+          class="input"
           type="email"
           value={email}
           onChange={(e) => {
@@ -37,14 +46,7 @@ const Login = () => {
         />
         <br />
         <input
-          style={{
-            border: "none",
-            color: "white",
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "black",
-            boxShadow: "1px 1px 10px #fa7d868c",
-          }}
+          class="input"
           type="password"
           value={password}
           onChange={(e) => {
@@ -53,6 +55,25 @@ const Login = () => {
           placeholder="Password"
         />
         <br />
+        <br />
+        {otpsent ? (
+          <>
+            <div>
+              <label>Enter OTP send on your number</label>
+              <input
+                class="input"
+                type="number"
+                // value={otp}
+                // onChange={(e) => {
+                //   setotp(e.target.value);
+                // }}
+              />
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         <br />
 
         <div class="button">
@@ -79,20 +100,7 @@ const Login = () => {
             Login
           </button>
         </div>
-        {/* {setotpsend(true) ? (
-          <>
-            <label>Enter OTP send on your number</label>
-            <input
-              type="number"
-              value={otpsent}
-              onChange={(e) => {
-                setotpsend(e.target.value);
-              }}
-            />
-          </>
-        ) : (
-          setotpsend(false)
-        )} */}
+
         <h3>
           NewUser??---
           <Link to="/signup" style={{ textDecoration: "none" }}>
